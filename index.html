@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Natal Card - Info</title>
+      <style>
+        body {
+         background-color: #000000;
+      }
+       .log {
+           margin: 1em 0px;
+           color: #FFFFFF;
+           line-height: 22px;
+      }
+      </style>
+   </head>
+   <body>
+      <pre class="log">==========================================<br>   Natal Card - Buscador de informações   <br>==========================================</pre>
+      <script type="text/javascript">
+         //Console de mensagens
+         const log = document.querySelector('.log');
+
+         //Pega os parametros de pesquisa da url
+         const queryString = window.location.search;
+         const urlParams = new URLSearchParams(queryString);
+
+         //Pega a url do QR Code informada no parametro ?qr={url}
+         const qr_url = urlParams.get('qr');
+
+         //Se a url do QR Code não for informada
+         if (qr_url == null || qr_url == '') {
+            //Mostra mensagem de erro
+            log.innerHTML += '<br><span style="color: red;">Nenhum dado foi inserido!</span>';
+         } else {
+            //Se for informado
+            var cod_uso = qr_url.split("/")[3];
+            var data_nas = qr_url.split("/")[4];
+
+            //Pega a data atual usada no request
+            function padTo2Digits(num) {
+              return num.toString().padStart(2, '0');
+            }
+
+            function formatDate(date) {
+              return [
+                date.getFullYear(),
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate())
+              ].join('');
+            }
+
+            var data_atual = formatDate(new Date());
+
+            log.innerHTML += '<br><span style="color: green;">Código de uso: ' + cod_uso + ' </span>';
+            log.innerHTML += '<br><span style="color: green;">Data de nascimento: ' + data_nas + ' </span>';
+            log.innerHTML += '<br><span style="color: yellow;">Buscando dados na database..</span>';
+
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.setRequestHeader("codigoacesso", "4807689a");
+            xmlhttp.send(JSON.stringify({
+               "codigoUso": cod_uso,
+               "dataNascimento": data_nas,
+               "nomeEvento": "meiaentrada",
+               "dataEvento": data_atual,
+               "cnpjPromotor": "00000000000000"
+            }));
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var dados = JSON.parse(this.responseText);
+
+                    var nome = dados.nome.toUpperCase();
+                    var instituicao = dados.instituicao.toUpperCase();
+                    var documento = dados.documento.toUpperCase();
+                    var curso = dados.curso.toUpperCase();
+                    var foto = dados.foto;
+
+                    log.innerHTML += '<br><span style="color: #00FE44;">Sucesso! Dados recebidos da database.</span>';
+                    log.innerHTML += '<br>Nome: ' + nome;
+                    log.innerHTML += '<br>Instituição: ' + instituicao;
+                    log.innerHTML += '<br>Curso: ' + curso;
+
+                    var text = "*Nome:* " + nome;
+                    text += "\n" + "*Instituição:* " + instituicao;
+                    text += "\n" + "*Curso:* " + curso;
+                    text += "\n" + "*Documento:* " + documento;
+                    text += "\n" + "*Foto:* " + foto;
+
+                    window.location.href = "https://api.whatsapp.com/send/?phone=5584994258527&text=" + encodeURIComponent(text) +  "&type=phone_number&app_absent=0";
+                }
+            };
+         }
+         console.log(qr_url);
+      </script>
+   </body>
+</html>
