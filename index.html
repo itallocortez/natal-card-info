@@ -13,7 +13,7 @@
            line-height: 22px;
       }
       </style>
-   </head> 
+   </head>
    <body>
       <pre class="log">==========================================<br>   Natal Card - Buscador de informações   <br>==========================================</pre>
       <script type="text/javascript">
@@ -36,47 +36,55 @@
             var cod_uso = qr_url.split("/")[3];
             var data_nas = qr_url.split("/")[4];
 
+            //Pega a data atual usada no request
+            function padTo2Digits(num) {
+              return num.toString().padStart(2, '0');
+            }
+
+            function formatDate(date) {
+              return [
+                date.getFullYear(),
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate())
+              ].join('');
+            }
+
+            var data_atual = formatDate(new Date());
+
             log.innerHTML += '<br><span style="color: green;">Código de uso: ' + cod_uso + ' </span>';
             log.innerHTML += '<br><span style="color: green;">Data de nascimento: ' + data_nas + ' </span>';
             log.innerHTML += '<br><span style="color: yellow;">Buscando dados na database..</span>';
 
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", "https://api.meiaentrada.org.br/v1/attribute-certificate/validate");
-            xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.setRequestHeader("codigoacesso", "4807689a");
             xmlhttp.send(JSON.stringify({
-               "validationInput": qr_url,
-               "validationType": 1
+               "codigoUso": cod_uso,
+               "dataNascimento": data_nas,
+               "nomeEvento": "meiaentrada",
+               "dataEvento": data_atual,
+               "cnpjPromotor": "00000000000000"
             }));
 
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var dados = JSON.parse(this.responseText);
 
-                    var nome = dados.student.name.toUpperCase();
-                    var instituicao = dados.student.institution.toUpperCase();
-                    var rg = dados.student.document;
-                    var cpf = dados.student.cpf;
-                    var curso = dados.student.course.toUpperCase();
-
-                    //Formata o CPF
-                    cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-                    //Formata o RG
-                    rg = rg.slice(6).replace(/(\d{3})(\d{3})(\d{3})/, "$1.$2.$3");
+                    var nome = dados.nome.toUpperCase();
+                    var curso = dados.curso.toUpperCase();
+                    var instituicao = dados.instituicao.toUpperCase();
 
                     log.innerHTML += '<br><span style="color: #00FE44;">Sucesso! Dados recebidos da database.</span>';
                     log.innerHTML += '<br>Nome: ' + nome;
-                    log.innerHTML += '<br>Instituição: ' + instituicao;
                     log.innerHTML += '<br>Curso: ' + curso;
-                    log.innerHTML += '<br>CPF: ' + cpf;
-                    log.innerHTML += '<br>RG: ' + rg;
+                    log.innerHTML += '<br>Instituição: ' + instituicao;
 
                     var text = "*Nome:*" + "\n" + nome + "\n";
-                    text += "\n" + "*Instituição:*" + "\n" + instituicao + "\n";
-                    text += "\n" + "*Curso:*" + "\n" + curso + "\n";
-                    text += "\n" + "*CPF:*" + "\n" + cpf + "\n";
-                    text += "\n" + "*RG:*" + "\n" + rg; 
+                    text += "*Curso:*" + "\n" + curso + "\n";
+                    text += "*Instituição:*" + "\n" + instituicao;
 
-                    window.location.replace("https://api.whatsapp.com/send/?phone=5584994258527&text=" + encodeURIComponent(text) +  "&type=phone_number&app_absent=0");
+                    window.location.href = "https://api.whatsapp.com/send/?phone=5584994258527&text=" + encodeURIComponent(text) +  "&type=phone_number&app_absent=0";
                 }
             };
          }
