@@ -94,6 +94,47 @@
                      }
                  }
              }
+             if (verify_domain == "dne.vc") {
+                 var cod_uso = qr_url.split("/")[4];
+                 var data_nas = qr_url.split("/")[5];
+                 var data_atual = formatDate(new Date());
+
+                 log.innerHTML += '<br><span style="color: green;">Código de uso: ' + cod_uso + ' </span>';
+                 log.innerHTML += '<br><span style="color: green;">Data de nascimento: ' + data_nas + ' </span>';
+
+                 var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
+                 xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
+                 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                 xmlhttp.setRequestHeader("codigoacesso", "4807689a");
+                 xmlhttp.send(JSON.stringify({
+                     "codigoUso": cod_uso,
+                     "dataNascimento": data_nas,
+                     "nomeEvento": "meiaentrada",
+                     "dataEvento": data_atual,
+                     "cnpjPromotor": "00000000000000"
+                 }));
+
+                 xmlhttp.onreadystatechange = function() {
+                     if (this.readyState == 4 && this.status == 200) {
+                         var dados = JSON.parse(this.responseText);
+
+                         var nome = dados.nome.toUpperCase();
+                         var curso = dados.curso.toUpperCase();
+                         var instituicao = dados.instituicao.toUpperCase().replace("RIO GRANDE", "RIO GRANDE DO NORTE");
+
+                         log.innerHTML += '<br><span style="color: #00FE44;">Sucesso! Dados recebidos da database.</span>';
+                         log.innerHTML += '<br>Nome: ' + nome;
+                         log.innerHTML += '<br>Curso: ' + curso;
+                         log.innerHTML += '<br>Instituição: ' + instituicao;
+
+                         var whats_message = "*Nome:*" + "\n" + nome + "\n";
+                         whats_message += "*Curso:*" + "\n" + curso + "\n";
+                         whats_message += "*Instituição:*" + "\n" + instituicao;
+
+                         window.location.href = "https://api.whatsapp.com/send/?phone=5584994258527&text=" + encodeURIComponent(whats_message) +  "&type=phone_number&app_absent=0";
+                     }
+                 }
+             }
              if (verify_domain == "documentodoestudantedorn.com.br") {
                var cod_uso = hashString.split("/")[1];
                var data_nas = hashString.split("/")[2];
