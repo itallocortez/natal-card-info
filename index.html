@@ -53,8 +53,8 @@
           var cod_uso = qr_url.split("/")[3];
           var data_nas = qr_url.split("/")[4];
           var data_atual = formatDate(new Date());
-          log.innerHTML += ' <br> <span style = "color: green;" > Código de uso: ' + cod_uso + ' </span>';
-          log.innerHTML += ' <br> <span style = "color: green;" > Data de nascimento: ' + data_nas + ' </span>';
+          log.innerHTML += '<br> <span style = "color: green;" > Código de uso: ' + cod_uso + ' </span>';
+          log.innerHTML += '<br> <span style = "color: green;" > Data de nascimento: ' + data_nas + ' </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
           xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
