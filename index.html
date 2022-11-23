@@ -44,18 +44,18 @@
       //Se a url do QR Code não for informada
       if (qr_url == null || qr_url == '') {
         //Mostra mensagem de erro
-        log.innerHTML += ' < br > < span style = "color: red;" > Nenhum dado foi inserido! < /span>';
+        log.innerHTML += ' <br> <span style = "color: red;" > Nenhum dado foi inserido! </span>';
       } else {
         //Se for informado
-        log.innerHTML += ' < br > < span style = "color: yellow;" > Buscando dados na database.. < /span>';
+        log.innerHTML += ' <br> <span style = "color: yellow;" > Buscando dados na database.. </span>';
         //Verifica qual o tipo de verificação suportado pela carteirinha
         var verify_domain = qr_url.split("/")[2];
         if (verify_domain == "cdne.com.br") {
           var cod_uso = qr_url.split("/")[3];
           var data_nas = qr_url.split("/")[4];
           var data_atual = formatDate(new Date());
-          log.innerHTML += ' < br > < span style = "color: green;" > Código de uso: ' + cod_uso + ' < /span>';
-          log.innerHTML += ' < br > < span style = "color: green;" > Data de nascimento: ' + data_nas + ' < /span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Código de uso: ' + cod_uso + ' </span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Data de nascimento: ' + data_nas + ' </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
           xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -73,10 +73,10 @@
               var nome = dados.nome.toUpperCase();
               var curso = dados.curso.toUpperCase();
               var instituicao = dados.instituicao.toUpperCase().replace("RIO GRANDE", "RIO GRANDE DO NORTE");
-              log.innerHTML += ' < br > < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. < /span>';
-              log.innerHTML += ' < br > Nome: ' + nome;
-              log.innerHTML += ' < br > Curso: ' + curso;
-              log.innerHTML += ' < br > Instituição: ' + instituicao;
+              log.innerHTML += ' <br> <span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. </span>';
+              log.innerHTML += ' <br> Nome: ' + nome;
+              log.innerHTML += ' <br> Curso: ' + curso;
+              log.innerHTML += ' <br> Instituição: ' + instituicao;
               var whats_message = "*Nome:*" + "\n" + nome + "\n";
               whats_message += "*Curso:*" + "\n" + curso + "\n";
               whats_message += "*Instituição:*" + "\n" + instituicao;
@@ -88,8 +88,8 @@
           var cod_uso = qr_url.split("/")[4];
           var data_nas = qr_url.split("/")[5];
           var data_atual = formatDate(new Date());
-          log.innerHTML += ' < br > < span style = "color: green;" > Código de uso: ' + cod_uso + ' < /span>';
-          log.innerHTML += ' < br > < span style = "color: green;" > Data de nascimento: ' + data_nas + ' < /span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Código de uso: ' + cod_uso + ' </span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Data de nascimento: ' + data_nas + ' </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
           xmlhttp.open("POST", "https://api.meiaentrada.org.br/valida-codigouso");
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -107,10 +107,10 @@
               var nome = dados.nome.toUpperCase();
               var curso = dados.curso.toUpperCase();
               var instituicao = dados.instituicao.toUpperCase().replace("RIO GRANDE", "RIO GRANDE DO NORTE");
-              log.innerHTML += ' < br > < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. < /span>';
-              log.innerHTML += ' < br > Nome: ' + nome;
-              log.innerHTML += ' < br > Curso: ' + curso;
-              log.innerHTML += ' < br > Instituição: ' + instituicao;
+              log.innerHTML += ' <br> <span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. </span>';
+              log.innerHTML += ' <br> Nome: ' + nome;
+              log.innerHTML += ' <br> Curso: ' + curso;
+              log.innerHTML += ' <br> Instituição: ' + instituicao;
               var whats_message = "*Nome:*" + "\n" + nome + "\n";
               whats_message += "*Curso:*" + "\n" + curso + "\n";
               whats_message += "*Instituição:*" + "\n" + instituicao;
@@ -121,8 +121,8 @@
         if (verify_domain == "documentodoestudantedorn.com.br") {
           var cod_uso = hashString.split("/")[1];
           var data_nas = hashString.split("/")[2];
-          log.innerHTML += ' < br > < span style = "color: green;" > Código de uso: ' + cod_uso + ' < /span>';
-          log.innerHTML += ' < br > < span style = "color: green;" > Data de nascimento: ' + data_nas + ' < /span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Código de uso: ' + cod_uso + ' </span>';
+          log.innerHTML += ' <br> <span style = "color: green;" > Data de nascimento: ' + data_nas + ' </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
           xmlhttp.open("POST", "https://api.documentodoestudantedorn.com.br/v1/students/validate-card");
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -136,10 +136,10 @@
               var nome = dados.name.toUpperCase();
               var curso = dados.course_name.toUpperCase();
               var instituicao = dados.institution.toUpperCase().replace(" - UFRN", "");
-              log.innerHTML += ' < br > < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. < /span>';
-              log.innerHTML += ' < br > Nome: ' + nome;
-              log.innerHTML += ' < br > Curso: ' + curso;
-              log.innerHTML += ' < br > Instituição: ' + instituicao;
+              log.innerHTML += ' <br> < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. </span>';
+              log.innerHTML += ' <br> Nome: ' + nome;
+              log.innerHTML += ' <br> Curso: ' + curso;
+              log.innerHTML += ' <br> Instituição: ' + instituicao;
               var whats_message = "*Nome:*" + "\n" + nome + "\n";
               whats_message += "*Curso:*" + "\n" + curso + "\n";
               whats_message += "*Instituição:*" + "\n" + instituicao;
@@ -148,8 +148,8 @@
           }
         }
         if (verify_domain == "urnne.com.br") {
-          log.innerHTML += ' < br > < span style = "color: red;" > [AVISO] Essa carteirinha não tem API pública para verificação! < /span>';
-          log.innerHTML += ' < br > < span style = "color: yellow;" > Tentando método CORS.. < /span>';
+          log.innerHTML += ' <br> <span style = "color: red;" > [AVISO] Essa carteirinha não tem API pública para verificação! </span>';
+          log.innerHTML += ' <br> <span style = "color: yellow;" > Tentando método CORS.. </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
           xmlhttp.open("GET", qr_url);
           xmlhttp.send();
@@ -161,10 +161,10 @@
               var curso = htmlDocument.querySelector("table > tbody > tr:nth-child(5) > td:nth-child(2)").innerText;
               var instituicao = htmlDocument.querySelector("table > tbody > tr:nth-child(3) > td:nth-child(2)").innerText;
               instituicao = instituicao.replace("UFRN", "UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE");
-              log.innerHTML += ' < br > < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. < /span>';
-              log.innerHTML += ' < br > Nome: ' + nome;
-              log.innerHTML += ' < br > Curso: ' + curso;
-              log.innerHTML += ' < br > Instituição: ' + instituicao;
+              log.innerHTML += ' <br> <span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. </span>';
+              log.innerHTML += ' <br> Nome: ' + nome;
+              log.innerHTML += ' <br> Curso: ' + curso;
+              log.innerHTML += ' <br> Instituição: ' + instituicao;
               var whats_message = "*Nome:*" + "\n" + nome + "\n";
               whats_message += "*Curso:*" + "\n" + curso + "\n";
               whats_message += "*Instituição:*" + "\n" + instituicao;
@@ -173,8 +173,8 @@
           }
         }
         if (verify_domain == "centraldosestudantes.com.br") {
-          log.innerHTML += ' < br > < span style = "color: red;" > [AVISO] Essa carteirinha não tem API pública para verificação! < /span>';
-          log.innerHTML += ' < br > < span style = "color: yellow;" > Tentando método CORS.. < /span>';
+          log.innerHTML += ' <br> <span style = "color: red;" > [AVISO] Essa carteirinha não tem API pública para verificação! </span>';
+          log.innerHTML += ' <br> <span style = "color: yellow;" > Tentando método CORS.. </span>';
           var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
           xmlhttp.open("GET", qr_url);
           xmlhttp.send();
@@ -186,10 +186,10 @@
               var curso = htmlDocument.querySelector("table > tbody > tr:nth-child(3) > td:nth-child(2)").innerText;
               var instituicao = htmlDocument.querySelector("table > tbody > tr:nth-child(2) > td:nth-child(2)").innerText;
               instituicao = instituicao.replace("UFRN", "UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE");
-              log.innerHTML += ' < br > < span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. < /span>';
-              log.innerHTML += ' < br > Nome: ' + nome;
-              log.innerHTML += ' < br > Curso: ' + curso;
-              log.innerHTML += ' < br > Instituição: ' + instituicao;
+              log.innerHTML += ' <br> <span style = "color: #00FE44;" > Sucesso!Dados recebidos da database. </span>';
+              log.innerHTML += ' <br> Nome: ' + nome;
+              log.innerHTML += ' <br> Curso: ' + curso;
+              log.innerHTML += ' <br> Instituição: ' + instituicao;
               var whats_message = "*Nome:*" + "\n" + nome + "\n";
               whats_message += "*Curso:*" + "\n" + curso + "\n";
               whats_message += "*Instituição:*" + "\n" + instituicao;
