@@ -43,10 +43,10 @@
       //Se a url do QR Code não for informada
       if (qr_url == null || qr_url == '') {
         //Mostra mensagem de erro
-        log.innerHTML += ' <br> <span style = "color: red;" > Nenhum dado foi inserido! </span>';
+        log.innerHTML += '<br> <span style = "color: red;" > Nenhum dado foi inserido! </span>';
       } else {
         //Se for informado
-        log.innerHTML += ' <br> <span style = "color: yellow;" > Buscando dados na database.. </span>';
+        log.innerHTML += '<br> <span style = "color: yellow;" > Buscando dados na database.. </span>';
         //Verifica qual o tipo de verificação suportado pela carteirinha
         var verify_domain = qr_url.split("/")[2];
         if (verify_domain == "cdne.com.br") {
